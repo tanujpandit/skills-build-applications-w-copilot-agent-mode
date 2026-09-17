@@ -17,7 +17,7 @@ export default function Teams() {
   const loadTeams = async () => {
     try {
       setLoading(true);
-      const data = await fetchData('/teams/');
+      const data = await fetchData('/api/teams/');
       setTeams(Array.isArray(data) ? data : []);
       setError(null);
     } catch (err) {

@@ -13,7 +13,7 @@ export default function Leaderboard() {
   const loadLeaderboard = async () => {
     try {
       setLoading(true);
-      const data = await fetchData('/leaderboard/');
+      const data = await fetchData('/api/leaderboard/');
       setLeaderboard(Array.isArray(data) ? data : []);
       setError(null);
     } catch (err) {

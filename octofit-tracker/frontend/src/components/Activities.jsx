@@ -19,7 +19,7 @@ export default function Activities() {
   const loadActivities = async () => {
     try {
       setLoading(true);
-      const data = await fetchData('/activities/');
+      const data = await fetchData('/api/activities/');
       setActivities(Array.isArray(data) ? data : []);
       setError(null);
     } catch (err) {

@@ -19,7 +19,7 @@ export default function Users() {
   const loadUsers = async () => {
     try {
       setLoading(true);
-      const data = await fetchData('/users/');
+      const data = await fetchData('/api/users/');
       setUsers(Array.isArray(data) ? data : []);
       setError(null);
     } catch (err) {
