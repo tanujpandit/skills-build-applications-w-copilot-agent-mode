@@ -6,6 +6,8 @@ import Teams from './components/Teams';
 import Users from './components/Users';
 import Workouts from './components/Workouts';
 
+const isCodespaceConfigured = Boolean(import.meta.env.VITE_CODESPACE_NAME);
+
 function App() {
   return (
     <Router>
@@ -88,18 +90,20 @@ function Home() {
             Track your fitness activities, join teams, and compete on the leaderboard!
           </p>
 
-          <div className="alert alert-info mt-4">
-            <h5>Configuration Required</h5>
-            <p className="mb-2">
-              Before using this application, ensure you have configured the
-              <code>VITE_CODESPACE_NAME</code> environment variable.
-            </p>
-            <p className="mb-0">
-              Add it to your <code>.env.local</code> file:
-              <br />
-              <code>VITE_CODESPACE_NAME=your-codespace-name</code>
-            </p>
-          </div>
+          {!isCodespaceConfigured && (
+            <div className="alert alert-warning mt-4">
+              <h5>Configuration Required</h5>
+              <p className="mb-2">
+                Before using this application, ensure you have configured the
+                <code>VITE_CODESPACE_NAME</code> environment variable.
+              </p>
+              <p className="mb-0">
+                Add it to your <code>.env.local</code> file:
+                <br />
+                <code>VITE_CODESPACE_NAME=your-codespace-name</code>
+              </p>
+            </div>
+          )}
 
           <div className="row mt-5">
             <div className="col-md-6 mb-3">

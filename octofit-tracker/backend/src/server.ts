@@ -15,6 +15,30 @@ const codespaceName = process.env.CODESPACE_NAME;
 const baseUrl = codespaceName
   ? `https://${codespaceName}-8000.app.github.dev`
   : 'http://localhost:8000';
+const allowedOrigins = new Set([
+  `https://${codespaceName}-5173.app.github.dev`,
+  'http://localhost:5173',
+  'http://127.0.0.1:5173',
+]);
+
+app.use((request, response, next) => {
+  const origin = request.headers.origin;
+
+  if (origin && allowedOrigins.has(origin)) {
+    response.setHeader('Access-Control-Allow-Origin', origin);
+    response.setHeader('Vary', 'Origin');
+  }
+
+  response.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
+  response.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  if (request.method === 'OPTIONS') {
+    response.sendStatus(204);
+    return;
+  }
+
+  next();
+});
 
 app.get('/api/health', (_request, response) => {
   response.json({ status: 'ok', baseUrl });
@@ -26,7 +50,7 @@ app.use('/api/activities', activitiesRouter);
 app.use('/api/leaderboard', leaderboardRouter);
 app.use('/api/workouts', workoutsRouter);
 
-app.listen(port, () => {
+app.listen(port, '0.0.0.0', () => {
   console.log(`OctoFit API listening on port ${port}`);
   console.log(`API base URL: ${baseUrl}`);
 });
